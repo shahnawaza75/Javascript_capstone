@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;1,200&display=swap");
 
 * {
-
   box-sizing: border-box;
   scroll-behavior: smooth;
   font-family: "Poppins", sans-serif;
@@ -21,7 +20,7 @@ header {
 a {
   text-decoration: none;
   margin-right: 5%;
-  color:white;
+  color: white;
 }
 
 a:hover {
