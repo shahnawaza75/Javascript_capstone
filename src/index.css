@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;1,200&display=swap");
 
 * {
+
   box-sizing: border-box;
   scroll-behavior: smooth;
   font-family: "Poppins", sans-serif;
@@ -31,7 +32,7 @@ a:hover {
   margin-right: 5%;
   width: 50px;
   height: 50px;
-  background: url(https://toppng.com/uploads/preview/free-icons-png-movie-icon-logo-115631952344tpobh0wuu.png);
+  background: url(https://toppng.com/uploads/preview/the-sims-logo-11530958268z7srqqiuxf.png);
   background-repeat: no-repeat;
   background-size: contain;
   border-radius: 50%;
