@@ -6,7 +6,6 @@
   font-family: "Poppins", sans-serif;
 }
 
-
 .d-flex {
   display: flex;
   background-color: rgb(49, 62, 72);
@@ -114,7 +113,6 @@ footer {
   text-align: center;
   padding-top: -4px;
 }
-
 
 .modal {
   display: block;
