@@ -1,14 +1,17 @@
 import displayShows from './displayShow.js';
 import { addMovieComment, fetchComment } from './commentsApi.js';
+import totalComments from './commentsCounter.js';
 
 const showModal = document.querySelector('#modal-section');
 // PopUp method
 const popModal = document.createElement('div');
 popModal.setAttribute('class', 'modal');
 const commentsPopUp = async (data) => {
-  document.body.addEventListener('click', (event) => {
+  document.body.addEventListener('click', async (event) => {
     if (event.target.className === 'comment-btn') {
       const commentId = event.target.parentNode.querySelector('button').id;
+      const list = await fetchComment(commentId);
+      const countComment = totalComments(list);
       data.forEach((show) => {
         const showId = show.id;
         if (showId.toString() === commentId.toString()) {
@@ -24,14 +27,13 @@ const commentsPopUp = async (data) => {
       <p class="d-flex show-desc">${show.summary}</p>
       <h4 class="d-flex mt-1">Language: ${show.language}</h4>
       </div>
-      <h3 class="d-flex center"><i class="fa fa-fw fa-comment mb-5"></i>  Comments(0)</h3>
+      <h3 class="d-flex center text-success"><i class="mb-5 commentsTotal ">${countComment}</i><p> Comment(s)</p></h3>
 
       <div class="flex-d-c mb-5 ">
       <ul class="d-flex s-around comment-list-header font-w-bold">
       <li>Posted </li> <li>By</li> <li> Comment</li>
       </ul>
-      <div class="comments-list-body">
-      </div>
+      <div class="comments-list-body"></div>
       </div>
       <form class="card bg-light mb-5" id="comment-form" method="POST">
        <div class="d-flex flex-d-c  card-body">
@@ -47,6 +49,7 @@ const commentsPopUp = async (data) => {
       });
       showModal.appendChild(popModal);
       showModal.style.display = ('block');
+
       const closeBtn = document.querySelector('.fa-window-close');
       document.addEventListener('click', (event) => {
         if (event.target === closeBtn) {
@@ -72,40 +75,37 @@ const commentsPopUp = async (data) => {
       commentList.setAttribute('class', 'd-flex flex-d-c');
       // UPDATE COMMENTS
       const updateComments = () => {
-        const date = new Date();
-        const day = date.getDay();
-        const month = date.getMonth();
-        const year = date.getFullYear();
+        let today = new Date();
+        const day = String(today.getDate()).padStart(2, '0');
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const year = today.getFullYear();
+        today = `${year}-${month}-${day}`;
         commentList.innerHTML += `<li class="d-flex s-around vierwerCommentList"> 
-          <span>${year} ${-month} ${-day}</span>  <span>${viewerUserName.value}</span>  <span>${viewerComment.value}</span></li>
+          <span>${today}</span>  <span>${viewerUserName.value}</span>  <span>${viewerComment.value}</span></li>
           `;
         commentSection.appendChild(commentList);
       };
       // Show Comments
       const displayComment = async (commentId) => {
-        const allComments = await fetchComment(commentId);
-        try {
-          allComments.forEach((data) => {
-            commentList.innerHTML += `<li class="d-flex s-around vierwerCommentList"> 
-          <span>${data.creation_date}</span>  <span>${data.username}</span>  <span>${data.comment}</span></li>
-          `;
-            commentSection.appendChild(commentList);
-          });
-        } catch (err) {
-          commentList.innerHTML += `<li class="d-flex s-around vierwerCommentList">${err.dara}</li>
-          `;
+        const allComments = await fetchComment(commentId) || [];
+        allComments.forEach((data) => {
+          commentList.innerHTML += `<li class="d-flex s-around vierwerCommentList"> 
+            <span>${data.creation_date}</span>  <span>${data.username}</span>  <span>${data.comment}</span></li>
+            `;
           commentSection.appendChild(commentList);
-        }
+        });
       };
 
       displayComment(commentId);
 
-      const commentsBtn = document.querySelector('.commentBtn');
+      const commentTotal = document.querySelector('.commentsTotal');
+      const form = document.querySelector('#comment-form');
       // listen to users enevent
-      commentsBtn.addEventListener('click', (e) => {
+      form.addEventListener('submit', (e) => {
         e.preventDefault();
         submitViewerInfo();
         updateComments();
+        commentTotal.innerHTML = parseInt(commentTotal.innerText, 10) + 1;
         viewerUserName.value = '';
         viewerComment.value = '';
       });
