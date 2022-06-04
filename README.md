@@ -33,12 +33,6 @@ Run npm start in your local browser or using Live Server in Visual Studio Code.
 - GitHub: (https://github.com/rotshidzw)
 - Twitter: (https://twitter.com/footballlz )
 - LinkedIn: (https://www.linkedin.com/in/rochidzwa-chester-8062b6211/)
--
-
-## 🤝 Contributing
-
-(https://github.com/shahnawaza75)
-(https://twitter.com/Shahnawaz Ali)
 
 Contributions, issues, and feature requests are welcome!
 
@@ -56,4 +50,4 @@ Give a ⭐️ if you like this project!
 
 ## 📝 License
 
-This project is [MIT](./MIT.md) licensed.
+
