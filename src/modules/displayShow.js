@@ -1,5 +1,4 @@
 import getshow from './getShows.js';
-import { getLikesData } from './likesCounter.js';
 
 const allShows = document.querySelector('.allShows');
 allShows.innerHTML = '';
@@ -27,16 +26,6 @@ const showTemplate = (Shows) => {
 const displayShows = async () => {
   const fetchedShows = await getshow();
   const Shows = fetchedShows.slice(0, 20);
-  const likesArray = await getLikesData();
-  likesArray.forEach((like) => {
-    Shows.forEach((show) => {
-      if (like.item_id === show.id) {
-        show.likes = like.likes;
-      } else if (show.likes === undefined) {
-        show.likes = 0;
-      }
-    });
-  });
   showTemplate(Shows);
 };
 
